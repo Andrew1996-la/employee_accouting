@@ -1,25 +1,24 @@
-import logo from './logo.svg';
 import './App.css';
+import AppInfo from "./components/app-info/app-info";
+import AppFilter from "./components/app-filter/app-filter";
+import SearchPanel from "./components/search-panel/search-panel";
+import EmployeesList from "./components/employees-list/employees-list";
+import EmployeesAddForm from "./components/employees-add-form/employees-add-form";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <div className="app">
+          <AppInfo />
+
+          <div className='search-panel'>
+              <SearchPanel />
+              <AppFilter />
+          </div>
+
+          <EmployeesList />
+          <EmployeesAddForm />
+      </div>
   );
 }
 
-export default App;
+export default App
