@@ -1,24 +1,10 @@
 import EmployeesListItem from "../employees-list-item/employees-list-item";
 import "./employees-list.css";
-import employeesDB from "../../fakeDB/employeesDB";
 import { Component } from "react";
 
 class EmployeesList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      employeesDB: employeesDB,
-    };
-  }
-
-  onDeleteEmployee = (key) => {
-    this.setState(({ employeesDB }) => ({
-      employeesDB: employeesDB.filter((employee) => employee.key !== key),
-    }));
-  };
-
   render() {
-    const { employeesDB } = this.state;
+    const { onDeleteEmployee, employeesDB } = this.props;
 
     return (
       <ul className="app-list list-group">
@@ -28,7 +14,7 @@ class EmployeesList extends Component {
               key={employee.key}
               name={employee.name}
               salary={employee.salary}
-              onDeleteEmployee={() => this.onDeleteEmployee(employee.key)}
+              onDeleteEmployee={() => onDeleteEmployee(employee.key)}
             />
           );
         })}
