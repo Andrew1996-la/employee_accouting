@@ -24,26 +24,46 @@ class App extends Component {
     }));
   };
 
-  addEmployee = (name, salary) => {
-    const newItem = {
+  addNewEmployee = (name, salary) => {
+    const newEmployee = {
       name,
       salary,
-      increase: false,
       key: generateId(),
+      increase: false,
+      rise: false,
     };
 
-    this.setState(({ employeesDB }) => {
-      const newArr = [...employeesDB, newItem];
-      return {
-        employeesDB: newArr,
-      };
-    });
+    this.setState(({ employeesDB }) => ({
+      employeesDB: [...employeesDB, newEmployee],
+    }));
+  };
+
+  onToggleIncrease = (key) => {
+    this.setState(({ employeesDB }) => ({
+      employeesDB: employeesDB.map((employee) => {
+        if (employee.key === key) {
+          return { ...employee, increase: !employee.increase };
+        }
+        return employee;
+      }),
+    }));
+  };
+
+  onToggleRise = (key) => {
+    this.setState(({ employeesDB }) => ({
+      employeesDB: employeesDB.map((employee) => {
+        if (employee.key === key) {
+          return { ...employee, rise: !employee.rise };
+        }
+        return employee;
+      }),
+    }));
   };
 
   render() {
     return (
       <div className="app">
-        <AppInfo />
+        <AppInfo employeesDB={this.state.employeesDB} />
 
         <div className="search-panel">
           <SearchPanel />
@@ -51,10 +71,12 @@ class App extends Component {
         </div>
 
         <EmployeesList
+          onToggleIncrease={this.onToggleIncrease}
           employeesDB={this.state.employeesDB}
           onDeleteEmployee={this.onDeleteEmployee}
+          onToggleRise={this.onToggleRise}
         />
-        <EmployeesAddForm addEmployee={this.addEmployee} />
+        <EmployeesAddForm addNewEmployee={this.addNewEmployee} />
       </div>
     );
   }

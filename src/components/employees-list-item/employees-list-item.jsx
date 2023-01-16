@@ -1,4 +1,5 @@
 import { Component } from "react";
+
 import "./employees-list-item.css";
 
 class EmployeesListItem extends Component {
@@ -10,12 +11,12 @@ class EmployeesListItem extends Component {
     };
   }
 
-  onIncrease = (e) => {
-    e.stopPropagation();
-    this.setState(({ increase }) => ({
-      increase: !increase,
-    }));
-  };
+  // onIncrease = (e) => {
+  //   e.stopPropagation();
+  //   this.setState(({ increase }) => ({
+  //     increase: !increase,
+  //   }));
+  // };
 
   onRise = () => {
     this.setState(({ rise }) => ({
@@ -24,8 +25,15 @@ class EmployeesListItem extends Component {
   };
 
   render() {
-    const { name, salary, onDeleteEmployee } = this.props;
-    const { increase, rise } = this.state;
+    const {
+      name,
+      salary,
+      onDeleteEmployee,
+      onToggleIncrease,
+      onToggleRise,
+      increase,
+      rise,
+    } = this.props;
 
     let className = "list-group-item d-flex justify-content-between";
     if (increase) {
@@ -37,7 +45,7 @@ class EmployeesListItem extends Component {
 
     return (
       <li className={className}>
-        <span onClick={this.onRise} className="list-group-item-label">
+        <span onClick={onToggleRise} className="list-group-item-label">
           {name}
         </span>
         <input
@@ -49,7 +57,7 @@ class EmployeesListItem extends Component {
           <button
             type="button"
             className="btn-cookie btn-sm "
-            onClick={this.onIncrease}
+            onClick={onToggleIncrease}
           >
             <i className="fas fa-cookie"></i>
           </button>

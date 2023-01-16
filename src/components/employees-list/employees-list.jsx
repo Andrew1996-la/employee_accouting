@@ -1,10 +1,13 @@
-import EmployeesListItem from "../employees-list-item/employees-list-item";
-import "./employees-list.css";
 import { Component } from "react";
+
+import EmployeesListItem from "../employees-list-item/employees-list-item";
+
+import "./employees-list.css";
 
 class EmployeesList extends Component {
   render() {
-    const { onDeleteEmployee, employeesDB } = this.props;
+    const { onDeleteEmployee, employeesDB, onToggleIncrease, onToggleRise } =
+      this.props;
 
     return (
       <ul className="app-list list-group">
@@ -14,7 +17,11 @@ class EmployeesList extends Component {
               key={employee.key}
               name={employee.name}
               salary={employee.salary}
+              increase={employee.increase}
+              rise={employee.rise}
               onDeleteEmployee={() => onDeleteEmployee(employee.key)}
+              onToggleIncrease={() => onToggleIncrease(employee.key)}
+              onToggleRise={() => onToggleRise(employee.key)}
             />
           );
         })}
