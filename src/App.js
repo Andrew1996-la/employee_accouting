@@ -15,6 +15,8 @@ class App extends Component {
     super(props);
     this.state = {
       employeesDB: employeesDB,
+      inputValue: "",
+      filter: "salary",
     };
   }
 
@@ -60,24 +62,60 @@ class App extends Component {
     }));
   };
 
+  searchEmployee = (arrayEmployees, inputValue) => {
+    if (inputValue.length === 0) return arrayEmployees;
+    return arrayEmployees.filter((employee) => {
+      return employee.name.toLowerCase().indexOf(inputValue.toLowerCase()) > -1;
+    });
+  };
+
+  updateInputValue = (inputValue) => {
+    this.setState({
+      inputValue: inputValue,
+    });
+  };
+
+  filterEmployee = (arrayEmployee, filter) => {
+    switch (filter) {
+      case "rise":
+        return arrayEmployee.filter((emp) => emp.rise);
+      case "salary":
+        return arrayEmployee.filter((emp) => emp.salary > 2000);
+      default:
+        return arrayEmployee;
+    }
+  };
+
+  setFilter = (filter) => {
+    this.setState({
+      filter: filter,
+    });
+  };
+
   render() {
+    const { employeesDB, inputValue, filter } = this.state;
+
     const employeesCount = this.state.employeesDB.length;
     const increased = this.state.employeesDB.filter(
       (employee) => employee.increase
     ).length;
+    const visibleEmployees = this.filterEmployee(
+      this.searchEmployee(employeesDB, inputValue),
+      filter
+    );
 
     return (
       <div className="app">
         <AppInfo increased={increased} employeesCount={employeesCount} />
 
         <div className="search-panel">
-          <SearchPanel />
-          <AppFilter />
+          <SearchPanel setInputValue={this.updateInputValue} />
+          <AppFilter setFilter={this.setFilter} filter={filter} />
         </div>
 
         <EmployeesList
           onToggleIncrease={this.onToggleIncrease}
-          employeesDB={this.state.employeesDB}
+          employeesDB={visibleEmployees}
           onDeleteEmployee={this.onDeleteEmployee}
           onToggleRise={this.onToggleRise}
         />
