@@ -16,7 +16,7 @@ class App extends Component {
     this.state = {
       employeesDB: employeesDB,
       inputValue: "",
-      filter: "salary",
+      filter: "all",
     };
   }
 
@@ -92,6 +92,17 @@ class App extends Component {
     });
   };
 
+  updateSalary = (id, newSalary) => {
+    this.setState({
+      employeesDB: this.state.employeesDB.map((employee) => {
+        if (employee.key === id) {
+          return { ...employee, salary: newSalary };
+        }
+        return employee;
+      }),
+    });
+  };
+
   render() {
     const { employeesDB, inputValue, filter } = this.state;
 
@@ -118,7 +129,9 @@ class App extends Component {
           employeesDB={visibleEmployees}
           onDeleteEmployee={this.onDeleteEmployee}
           onToggleRise={this.onToggleRise}
+          updateSalary={this.updateSalary}
         />
+
         <EmployeesAddForm addNewEmployee={this.addNewEmployee} />
       </div>
     );

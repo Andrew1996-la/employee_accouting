@@ -6,8 +6,13 @@ import "./employees-list.css";
 
 class EmployeesList extends Component {
   render() {
-    const { onDeleteEmployee, employeesDB, onToggleIncrease, onToggleRise } =
-      this.props;
+    const {
+      onDeleteEmployee,
+      employeesDB,
+      onToggleIncrease,
+      onToggleRise,
+      updateSalary,
+    } = this.props;
 
     return (
       <ul className="app-list list-group">
@@ -22,6 +27,8 @@ class EmployeesList extends Component {
               onDeleteEmployee={() => onDeleteEmployee(employee.key)}
               onToggleIncrease={() => onToggleIncrease(employee.key)}
               onToggleRise={() => onToggleRise(employee.key)}
+              idEmployee={employee.key}
+              updateSalary={updateSalary}
             />
           );
         })}

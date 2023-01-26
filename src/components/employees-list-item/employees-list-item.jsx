@@ -8,26 +8,23 @@ class EmployeesListItem extends Component {
     this.state = {
       increase: false,
       rise: false,
+      salary: this.props.salary,
     };
   }
 
-  // onIncrease = (e) => {
-  //   e.stopPropagation();
-  //   this.setState(({ increase }) => ({
-  //     increase: !increase,
-  //   }));
-  // };
+  handleSalaryUpdate = (e) => {
+    this.setState({
+      salary: e.target.value,
+    });
+  };
 
-  onRise = () => {
-    this.setState(({ rise }) => ({
-      rise: !rise,
-    }));
+  handleBlur = () => {
+    this.props.updateSalary(this.props.idEmployee, this.state.salary);
   };
 
   render() {
     const {
       name,
-      salary,
       onDeleteEmployee,
       onToggleIncrease,
       onToggleRise,
@@ -51,7 +48,9 @@ class EmployeesListItem extends Component {
         <input
           type="text"
           className="list-group-item-input"
-          defaultValue={salary + "$"}
+          onBlur={this.handleBlur}
+          onChange={this.handleSalaryUpdate}
+          value={this.state.salary}
         />
         <div className="d-flex justify-content-center align-items-center">
           <button
